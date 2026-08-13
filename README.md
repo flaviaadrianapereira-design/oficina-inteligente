@@ -12,7 +12,7 @@ Desenvolver uma solução para auxiliar oficinas de manutenção no controle de 
 - Ordens de serviço
 - Registro de diagnóstico
 - Controle de manutenção
-- Histórico de reparos
+- Histórico  reparos
 - Controle de tempo de serviço
 - Indicadores de produtividade
 - Assistente de IA para apoio ao diagnóstico
