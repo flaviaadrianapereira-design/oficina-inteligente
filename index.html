@@ -3,549 +3,391 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Oficina Inteligente</title>
-<style>
-  * { box-sizing: border-box; }
 
-  body {
+<title>Oficina Inteligente</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
     margin: 0;
     font-family: Arial, sans-serif;
     background: #f3f6f9;
     color: #1f2937;
-  }
+}
 
-  header {
+header {
     background: #17365d;
     color: white;
     padding: 25px;
-  }
-  header h1 { margin: 0; }
-  header p { margin-bottom: 0; }
+}
 
-  .container {
+header h1 {
+    margin: 0;
+}
+
+header p {
+    margin-bottom: 0;
+}
+
+.container {
     max-width: 1100px;
     margin: auto;
     padding: 20px;
-  }
+}
 
-  section {
+section {
     background: white;
     margin-bottom: 20px;
     padding: 25px;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  }
+}
 
-  h2 { margin-top: 0; color: #17365d; }
+h2 {
+    margin-top: 0;
+    color: #17365d;
+}
 
-  .grid {
+.grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 15px;
-  }
+}
 
-  label { display: block; font-weight: bold; margin-bottom: 6px; }
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
 
-  input, select, textarea {
+input,
+select,
+textarea {
     width: 100%;
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 15px;
-    font-family: inherit;
-  }
-  textarea { min-height: 100px; resize: vertical; }
+}
 
-  button {
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+button {
     border: none;
     border-radius: 8px;
     padding: 12px 18px;
     cursor: pointer;
     font-weight: bold;
     margin-top: 15px;
-    margin-right: 8px;
-    font-size: 14px;
-  }
-  button:disabled { opacity: 0.6; cursor: not-allowed; }
-  button:hover:not(:disabled) { opacity: 0.9; }
+}
 
-  .btn-primary { background: #17365d; color: white; }
-  .btn-danger  { background: #c0392b; color: white; }
-  .btn-success { background: #198754; color: white; }
+.btn-primary {
+    background: #17365d;
+    color: white;
+}
 
-  .item {
+.btn-danger {
+    background: #c0392b;
+    color: white;
+}
+
+.btn-success {
+    background: #198754;
+    color: white;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+.item {
     border: 1px solid #ddd;
     border-radius: 10px;
     padding: 15px;
     margin-top: 12px;
     background: #fafafa;
-  }
-  .item strong { color: #17365d; }
+}
 
-  .status {
+.item strong {
+    color: #17365d;
+}
+
+.status {
     display: inline-block;
     padding: 5px 10px;
     border-radius: 20px;
     font-size: 13px;
     background: #fff3cd;
-  }
+}
 
-  .vazio { color: #777; font-style: italic; }
+.status-finalizada {
+    background: #d1e7dd;
+    color: #0f5132;
+}
 
-  .resultado {
+.vazio {
+    color: #777;
+    font-style: italic;
+}
+
+.resultado {
     background: #eef6ff;
     border-left: 5px solid #17365d;
     padding: 15px;
     margin-top: 15px;
     border-radius: 8px;
-  }
-
-  .aviso-erro {
-    background: #fdecea;
-    border-left: 5px solid #c0392b;
-    color: #7a1f16;
-    padding: 12px 15px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-  }
+}
 </style>
 </head>
+
 <body>
 
 <header>
-  <div class="container">
-    <h1>🔧 Oficina Inteligente</h1>
-    <p>Sistema inteligente para gestão de manutenção de ferramentas</p>
-  </div>
+    <div class="container">
+        <h1>🔧 Oficina Inteligente</h1>
+        <p>Sistema inteligente para gestão de manutenção de ferramentas</p>
+    </div>
 </header>
 
 <div class="container">
 
-  <div id="avisoErro"></div>
-
-  <!-- CADASTRO DE FERRAMENTAS -->
-  <section>
-    <h2>🔧 Cadastro de Ferramentas</h2>
-
-    <div class="grid">
-      <div>
-        <label for="patrimonio">Patrimônio / Código</label>
+<!-- =========================
+     CADASTRO DE FERRAMENTAS
+========================= -->
+<section>
+<h2>🔧 Cadastro de Ferramentas</h2>
+<div class="grid">
+    <div>
+        <label>Patrimônio / Código</label>
         <input id="patrimonio" placeholder="Ex.: 12345">
-      </div>
-      <div>
-        <label for="tipo">Tipo da ferramenta</label>
+    </div>
+    <div>
+        <label>Tipo da ferramenta</label>
         <input id="tipo" placeholder="Ex.: Parafusadeira">
-      </div>
-      <div>
-        <label for="modelo">Modelo</label>
+    </div>
+    <div>
+        <label>Modelo</label>
         <input id="modelo" placeholder="Ex.: SF 6-A22">
-      </div>
-      <div>
-        <label for="serie">Número de série</label>
+    </div>
+    <div>
+        <label>Número de série</label>
         <input id="serie" placeholder="Ex.: SN123456">
-      </div>
     </div>
+</div>
+<button class="btn-primary" onclick="cadastrarFerramenta()">
+    ➕ Cadastrar ferramenta
+</button>
+<div id="listaFerramentas"></div>
+</section>
 
-    <button class="btn-primary" id="btnCadastrar" onclick="cadastrarFerramenta()">➕ Cadastrar ferramenta</button>
-
-    <div id="listaFerramentas"><p class="vazio">Carregando...</p></div>
-  </section>
-
-  <!-- ORDEM DE SERVIÇO -->
-  <section>
-    <h2>📋 Nova Ordem de Serviço</h2>
-
-    <div class="grid">
-      <div>
-        <label for="ferramentaOS">Ferramenta</label>
+<!-- =========================
+     ORDEM DE SERVIÇO
+========================= -->
+<section>
+<h2>📋 Nova Ordem de Serviço</h2>
+<div class="grid">
+    <div>
+        <label>Ferramenta</label>
         <select id="ferramentaOS">
-          <option value="">Selecione uma ferramenta</option>
+            <option value="">Selecione uma ferramenta</option>
         </select>
-      </div>
     </div>
+</div>
+<br>
+<label>Problema relatado</label>
+<textarea id="problema" placeholder="Descreva o problema apresentado pela ferramenta"></textarea>
 
-    <br>
+<label>Diagnóstico técnico</label>
+<textarea id="diagnostico" placeholder="Informe o diagnóstico realizado (Opcional ao abrir)"></textarea>
 
-    <label for="problema">Problema relatado</label>
-    <textarea id="problema" placeholder="Descreva o problema apresentado pela ferramenta"></textarea>
+<button class="btn-primary" onclick="criarOS()">
+    📝 Criar Ordem de Serviço
+</button>
+<div id="listaOS"></div>
+</section>
 
-    <label for="diagnostico">Diagnóstico técnico</label>
-    <textarea id="diagnostico" placeholder="Informe o diagnóstico realizado"></textarea>
+<!-- =========================
+     ASSISTENTE
+========================= -->
+<section>
+<h2>🤖 Assistente de Diagnóstico</h2>
+<p>Digite o problema apresentado pela ferramenta e o sistema irá sugerir algumas verificações técnicas.</p>
+<textarea id="problemaIA" placeholder="Ex.: ferramenta não liga, faiscando, fraca..."></textarea>
+<button class="btn-success" onclick="analisarProblema()">
+    🤖 Analisar problema
+</button>
+<div id="resultadoIA"></div>
+</section>
 
-    <button class="btn-primary" id="btnCriarOS" onclick="criarOS()">📝 Criar Ordem de Serviço</button>
-
-    <div id="listaOS"><p class="vazio">Carregando...</p></div>
-  </section>
-
-  <!-- ASSISTENTE -->
-  <section>
-    <h2>🤖 Assistente de Diagnóstico</h2>
-    <p>Digite o problema apresentado pela ferramenta e o sistema irá sugerir algumas verificações técnicas.</p>
-
-    <textarea id="problemaIA" placeholder="Ex.: ferramenta não liga"></textarea>
-
-    <button class="btn-success" onclick="analisarProblema()">🤖 Analisar problema</button>
-
-    <div id="resultadoIA"></div>
-  </section>
-
-  <!-- HISTÓRICO -->
-  <section>
-    <h2>📊 Histórico de Ordens Finalizadas</h2>
-    <div id="historico"><p class="vazio">Carregando...</p></div>
-  </section>
+<!-- =========================
+     HISTÓRICO
+========================= -->
+<section>
+<h2>📊 Histórico de Ordens Finalizadas</h2>
+<div id="historico"></div>
+</section>
 
 </div>
 
 <script>
+/* ==================================
+   DADOS DO SISTEMA
+================================== */
+let ferramentas = JSON.parse(localStorage.getItem("ferramentas")) || [];
+let ordens = JSON.parse(localStorage.getItem("ordens")) || [];
 
 /* ==================================
-   ESTADO DA APLICAÇÃO
+   SALVAR DADOS
 ================================== */
-
-let ferramentas = [];
-let ordens = [];
-
-/* ==================================
-   PERSISTÊNCIA (window.storage)
-================================== */
-
-async function carregarDados() {
-  try {
-    const [r1, r2] = await Promise.allSettled([
-      window.storage.get("ferramentas"),
-      window.storage.get("ordens")
-    ]);
-
-    ferramentas = (r1.status === "fulfilled" && r1.value) ? JSON.parse(r1.value.value) : [];
-    ordens = (r2.status === "fulfilled" && r2.value) ? JSON.parse(r2.value.value) : [];
-  } catch (erro) {
-    console.error("Erro ao carregar dados:", erro);
-    mostrarErro("Não foi possível carregar os dados salvos. Iniciando com uma lista vazia.");
-  }
-
-  atualizar();
-}
-
-async function salvar() {
-  try {
-    await Promise.all([
-      window.storage.set("ferramentas", JSON.stringify(ferramentas)),
-      window.storage.set("ordens", JSON.stringify(ordens))
-    ]);
-    return true;
-  } catch (erro) {
-    console.error("Erro ao salvar dados:", erro);
-    mostrarErro("Não foi possível salvar as alterações. Tente novamente.");
-    return false;
-  }
-}
-
-function mostrarErro(mensagem) {
-  const aviso = document.getElementById("avisoErro");
-  aviso.innerHTML = <div class="aviso-erro">⚠️ ${mensagem}</div>;
-  setTimeout(() => { aviso.innerHTML = ""; }, 5000);
+function salvar() {
+    localStorage.setItem("ferramentas", JSON.stringify(ferramentas));
+    localStorage.setItem("ordens", JSON.stringify(ordens));
 }
 
 /* ==================================
    CADASTRAR FERRAMENTA
 ================================== */
+function cadastrarFerramenta() {
+    const patrimonio = document.getElementById("patrimonio").value.trim();
+    const tipo = document.getElementById("tipo").value.trim();
+    const modelo = document.getElementById("modelo").value.trim();
+    const serie = document.getElementById("serie").value.trim();
 
-async function cadastrarFerramenta() {
-  const patrimonio = document.getElementById("patrimonio").value.trim();
-  const tipo = document.getElementById("tipo").value.trim();
-  const modelo = document.getElementById("modelo").value.trim();
-  const serie = document.getElementById("serie").value.trim();
+    if (!patrimonio || !tipo || !modelo || !serie) {
+        alert("Preencha todos os campos da ferramenta.");
+        return;
+    }
 
-  if (!patrimonio || !tipo || !modelo || !serie) {
-    mostrarErro("Preencha todos os campos da ferramenta.");
-    return;
-  }
+    const ferramenta = {
+        id: Date.now(),
+        patrimonio: patrimonio,
+        tipo: tipo,
+        modelo: modelo,
+        serie: serie
+    };
 
-  const ferramenta = { id: Date.now(), patrimonio, tipo, modelo, serie };
+    ferramentas.push(ferramenta);
+    salvar();
 
-  const btn = document.getElementById("btnCadastrar");
-  btn.disabled = true;
+    document.getElementById("patrimonio").value = "";
+    document.getElementById("tipo").value = "";
+    document.getElementById("modelo").value = "";
+    document.getElementById("serie").value = "";
 
-  ferramentas.push(ferramenta);
-  const ok = await salvar();
-
-  if (!ok) {
-    ferramentas = ferramentas.filter(f => f.id !== ferramenta.id);
-    btn.disabled = false;
-    return;
-  }
-
-  document.getElementById("patrimonio").value = "";
-  document.getElementById("tipo").value = "";
-  document.getElementById("modelo").value = "";
-  document.getElementById("serie").value = "";
-
-  atualizar();
-  btn.disabled = false;
+    atualizar();
+    alert("Ferramenta cadastrada com sucesso!");
 }
 
 /* ==================================
    EXCLUIR FERRAMENTA
 ================================== */
-
-async function excluirFerramenta(id) {
-  if (!confirm("Excluir esta ferramenta?")) return;
-
-  const anterior = ferramentas;
-  ferramentas = ferramentas.filter(f => f.id !== id);
-
-  const ok = await salvar();
-  if (!ok) { ferramentas = anterior; return; }
-
-  atualizar();
+function excluirFerramenta(id) {
+    if (!confirm("Excluir esta ferramenta?")) return;
+    ferramentas = ferramentas.filter(f => f.id !== id);
+    salvar();
+    atualizar();
 }
 
 /* ==================================
    CRIAR ORDEM DE SERVIÇO
 ================================== */
+function criarOS() {
+    const ferramentaId = Number(document.getElementById("ferramentaOS").value);
+    const problema = document.getElementById("problema").value.trim();
+    const diagnostico = document.getElementById("diagnostico").value.trim();
 
-async function criarOS() {
-  const ferramentaId = Number(document.getElementById("ferramentaOS").value);
-  const problema = document.getElementById("problema").value.trim();
-  const diagnostico = document.getElementById("diagnostico").value.trim();
+    if (!ferramentaId || !problema) {
+        alert("Selecione uma ferramenta e informe o problema.");
+        return;
+    }
 
-  if (!ferramentaId || !problema) {
-    mostrarErro("Selecione uma ferramenta e informe o problema.");
-    return;
-  }
+    const ferramenta = ferramentas.find(f => f.id === ferramentaId);
 
-  const ferramenta = ferramentas.find(f => f.id === ferramentaId);
-  if (!ferramenta) {
-    mostrarErro("Ferramenta não encontrada. Atualize a página e tente novamente.");
-    return;
-  }
+    const ordem = {
+        id: Date.now(),
+        ferramentaId: ferramentaId,
+        patrimonio: ferramenta.patrimonio,
+        ferramenta: ferramenta.tipo,
+        modelo: ferramenta.modelo,
+        problema: problema,
+        diagnostico: diagnostico || "Aguardando avaliação",
+        status: "Aberta",
+        data: new Date().toLocaleString("pt-BR")
+    };
 
-  const ordem = {
-    id: Date.now(),
-    ferramentaId,
-    patrimonio: ferramenta.patrimonio,
-    ferramenta: ferramenta.tipo,
-    modelo: ferramenta.modelo,
-    problema,
-    diagnostico,
-    status: "Aberta",
-    data: new Date().toLocaleString("pt-BR")
-  };
+    ordens.push(ordem);
+    salvar();
 
-  const btn = document.getElementById("btnCriarOS");
-  btn.disabled = true;
+    document.getElementById("problema").value = "";
+    document.getElementById("diagnostico").value = "";
 
-  ordens.push(ordem);
-  const ok = await salvar();
-
-  if (!ok) {
-    ordens = ordens.filter(o => o.id !== ordem.id);
-    btn.disabled = false;
-    return;
-  }
-
-  document.getElementById("problema").value = "";
-  document.getElementById("diagnostico").value = "";
-
-  atualizar();
-  btn.disabled = false;
+    atualizar();
+    alert("Ordem de serviço criada com sucesso!");
 }
 
 /* ==================================
    FINALIZAR OS
 ================================== */
+function finalizarOS(id) {
+    const ordem = ordens.find(o => o.id === id);
+    if (!ordem) return;
 
-async function finalizarOS(id) {
-  const ordem = ordens.find(o => o.id === id);
-  if (!ordem) return;
+    const novoDiagnostico = prompt("Atualize o diagnóstico técnico para finalizar:", ordem.diagnostico);
+    
+    if (novoDiagnostico === null) return; // cancelou o prompt
+    if (novoDiagnostico.trim() === "") {
+        alert("É necessário um diagnóstico para finalizar a OS.");
+        return;
+    }
 
-  const statusAnterior = ordem.status;
-  ordem.status = "Finalizada";
-  ordem.dataFinalizacao = new Date().toLocaleString("pt-BR");
+    ordem.diagnostico = novoDiagnostico.trim();
+    ordem.status = "Finalizada";
+    ordem.dataFim = new Date().toLocaleString("pt-BR");
 
-  const ok = await salvar();
-  if (!ok) { ordem.status = statusAnterior; delete ordem.dataFinalizacao; return; }
-
-  atualizar();
+    salvar();
+    atualizar();
+    alert("Ordem de serviço finalizada com sucesso!");
 }
 
 /* ==================================
    EXCLUIR OS
 ================================== */
-
-async function excluirOS(id) {
-  if (!confirm("Excluir esta ordem de serviço?")) return;
-
-  const anterior = ordens;
-  ordens = ordens.filter(o => o.id !== id);
-
-  const ok = await salvar();
-  if (!ok) { ordens = anterior; return; }
-
-  atualizar();
+function excluirOS(id) {
+    if (!confirm("Tem certeza que deseja excluir esta Ordem de Serviço?")) return;
+    ordens = ordens.filter(o => o.id !== id);
+    salvar();
+    atualizar();
 }
 
 /* ==================================
-   ASSISTENTE DE DIAGNÓSTICO
+   ASSISTENTE DE DIAGNÓSTICO IA
 ================================== */
-
 function analisarProblema() {
-  const problema = document.getElementById("problemaIA").value.trim().toLowerCase();
+    const problemaTexto = document.getElementById("problemaIA").value.toLowerCase().trim();
+    const resultadoDiv = document.getElementById("resultadoIA");
 
-  if (!problema) {
-    mostrarErro("Digite o problema da ferramenta.");
-    return;
-  }
+    if (!problemaTexto) {
+        alert("Digite um problema para o assistente analisar.");
+        return;
+    }
 
-  let texto = "<strong>🔎 Sugestão de verificação técnica:</strong><br><br>";
+    let recomendacao = "";
 
-  if (problema.includes("não liga") || problema.includes("nao liga")) {
-    texto += `
-      1. Verificar bateria ou alimentação.<br>
-      2. Verificar contatos elétricos.<br>
-      3. Testar interruptor.<br>
-      4. Verificar cabos e conexões.<br>
-      5. Verificar placa eletrônica.<br>
-    `;
-  } else if (problema.includes("barulho") || problema.includes("ruído") || problema.includes("ruido")) {
-    texto += `
-      1. Verificar rolamentos.<br>
-      2. Verificar engrenagens.<br>
-      3. Verificar eixo e componentes mecânicos.<br>
-      4. Procurar folgas ou desgaste.<br>
-    `;
-  } else if (problema.includes("não gira") || problema.includes("nao gira")) {
-    texto += `
-      1. Verificar alimentação.<br>
-      2. Verificar interruptor.<br>
-      3. Verificar motor.<br>
-      4. Verificar engrenagens.<br>
-      5. Verificar travamento mecânico.<br>
-    `;
-  } else {
-    texto += `
-      1. Inspeção visual.<br>
-      2. Verificar alimentação.<br>
-      3. Verificar conexões elétricas.<br>
-      4. Verificar componentes mecânicos.<br>
-      5. Realizar testes funcionais.<br>
-    `;
-  }
-
-  texto += <br><strong>⚠️ A sugestão é apenas apoio técnico. O diagnóstico final deve ser realizado pelo profissional.</strong>;
-
-  document.getElementById("resultadoIA").innerHTML = <div class="resultado">${texto}</div>;
-}
-
-/* ==================================
-   ATUALIZAR TELA
-================================== */
-
-function atualizar() {
-  atualizarFerramentas();
-  atualizarSelectFerramentas();
-  atualizarOS();
-  atualizarHistorico();
-}
-
-function atualizarFerramentas() {
-  const lista = document.getElementById("listaFerramentas");
-
-  if (ferramentas.length === 0) {
-    lista.innerHTML = <p class="vazio">Nenhuma ferramenta cadastrada.</p>;
-    return;
-  }
-
-  lista.innerHTML = "<h3>Ferramentas cadastradas</h3>" + ferramentas.map(f => `
-    <div class="item">
-      <strong>${escapeHtml(f.tipo)}</strong><br>
-      Patrimônio: ${escapeHtml(f.patrimonio)}<br>
-      Modelo: ${escapeHtml(f.modelo)}<br>
-      Série: ${escapeHtml(f.serie)}<br>
-      <button class="btn-danger" onclick="excluirFerramenta(${f.id})">🗑️ Excluir</button>
-    </div>
-  `).join("");
-}
-
-function atualizarSelectFerramentas() {
-  const select = document.getElementById("ferramentaOS");
-  const valorAtual = select.value;
-
-  select.innerHTML = <option value="">Selecione uma ferramenta</option> +
-    ferramentas.map(f => <option value="${f.id}">${escapeHtml(f.patrimonio)} - ${escapeHtml(f.tipo)} - ${escapeHtml(f.modelo)}</option>).join("");
-
-  if (ferramentas.some(f => String(f.id) === valorAtual)) {
-    select.value = valorAtual;
-  }
-}
-
-function atualizarOS() {
-  const lista = document.getElementById("listaOS");
-  const abertas = ordens.filter(o => o.status === "Aberta");
-
-  if (abertas.length === 0) {
-    lista.innerHTML = <p class="vazio">Nenhuma ordem de serviço aberta.</p>;
-    return;
-  }
-
-  lista.innerHTML = "<h3>Ordens de serviço abertas</h3>" + abertas.map(o => `
-    <div class="item">
-      <strong>OS #${o.id}</strong><br><br>
-      Ferramenta: ${escapeHtml(o.ferramenta)}<br>
-      Patrimônio: ${escapeHtml(o.patrimonio)}<br>
-      Modelo: ${escapeHtml(o.modelo)}<br><br>
-      <strong>Problema:</strong><br>
-      ${escapeHtml(o.problema)}<br><br>
-      <strong>Diagnóstico:</strong><br>
-      ${escapeHtml(o.diagnostico) || "Não informado"}<br><br>
-      <span class="status">${o.status}</span><br>
-      <small>Criada em: ${o.data}</small><br>
-      <button class="btn-success" onclick="finalizarOS(${o.id})">✅ Finalizar</button>
-      <button class="btn-danger" onclick="excluirOS(${o.id})">🗑️ Excluir</button>
-    </div>
-  `).join("");
-}
-
-function atualizarHistorico() {
-  const historico = document.getElementById("historico");
-  const finalizadas = ordens.filter(o => o.status === "Finalizada");
-
-  if (finalizadas.length === 0) {
-    historico.innerHTML = <p class="vazio">Nenhuma ordem finalizada.</p>;
-    return;
-  }
-
-  historico.innerHTML = finalizadas.map(o => `
-    <div class="item">
-      <strong>OS #${o.id}</strong><br>
-      ${escapeHtml(o.ferramenta)} - ${escapeHtml(o.modelo)}<br>
-      Patrimônio: ${escapeHtml(o.patrimonio)}<br>
-      Problema: ${escapeHtml(o.problema)}<br>
-      Diagnóstico: ${escapeHtml(o.diagnostico) || "Não informado"}<br>
-      <span class="status">Finalizada</span>
-    </div>
-  `).join("");
-}
-
-/* ==================================
-   UTILITÁRIO
-================================== */
-
-function escapeHtml(texto) {
-  if (!texto) return "";
-  const div = document.createElement("div");
-  div.textContent = texto;
-  return div.innerHTML;
-}
-
-/* ==================================
-   INICIALIZAÇÃO
-================================== */
-
-carregarDados();
-
-</script>
-
-</body>
-</html>
+    if (problemaTexto.includes("não liga") || problemaTexto.includes("nao liga") || problemaTexto.includes("desliga")) {
+        recomendacao = `
+            <strong>💡 Sugestões de Verificação para: Ferramenta não liga</strong><br><br>
+            1. 🔌 <strong>Alimentação:</strong> Verifique a integridade do cabo elétrico, plugue ou nível de carga da bateria.<br>
+            2. 🧭 <strong>Escovas de Carvão:</strong> Verifique se as escovas estão gastas ou travadas no porta-escovas.<br>
+            3. 🔘 <strong>Gatilho/Interruptor:</strong> Teste a continuidade do interruptor de acionamento com um multímetro.
+        `;
+    } else if (problemaTexto.includes("faisca") || problemaTexto.includes("fumaça") || problemaTexto.includes("cheiro")) {
+        recomendacao = `
+            <strong>💡 Sugestões de Verificação para: Faiscando ou Fumaça</strong><br><br>
+            1. ⚡ <strong>Curto-Circuito:</strong> Inspecione o induzido (indutor) e o estator procurando queimas ou fios rompidos.<br>
+            2. 🪨 <strong>Escovas de Carvão:</strong> Escovas gastas ou de má qualidade geram faiscamento excessivo no coletor.<br>
