@@ -1,1 +1,805 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Oficina Inteligente</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f3f6f9;
+    color: #17202a;
+}
+
+header {
+    background: #17365d;
+    color: white;
+    padding: 25px;
+}
+
+header h1 {
+    margin: 0;
+}
+
+header p {
+    margin-bottom: 0;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+h2 {
+    color: #17365d;
+    margin-top: 0;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #ccd3da;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+button {
+    border: none;
+    border-radius: 8px;
+    padding: 11px 16px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.btn-primary {
+    background: #17365d;
+    color: white;
+}
+
+.btn-success {
+    background: #198754;
+    color: white;
+}
+
+.btn-danger {
+    background: #dc3545;
+    color: white;
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th,
+td {
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background: #17365d;
+    color: white;
+}
+
+.status {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 20px;
+    background: #e9ecef;
+    font-size: 13px;
+}
+
+.vazio {
+    text-align: center;
+    color: #777;
+    padding: 20px;
+}
+
+.acoes {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 700px) {
+    table {
+        font-size: 13px;
+    }
+
+    th,
+    td {
+        padding: 7px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="container">
+        <h1>🔧 Oficina Inteligente</h1>
+        <p>Sistema de gestão de manutenção de ferramentas</p>
+    </div>
+</header>
+
+<div class="container">
+
+    <!-- FERRAMENTAS -->
+    <section class="card">
+
+        <h2>🔧 Cadastro de Ferramentas</h2>
+
+        <div class="grid">
+
+            <div>
+                <label for="patrimonio">Patrimônio / Código</label>
+                <input
+                    id="patrimonio"
+                    type="text"
+                    placeholder="Ex.: 12345">
+            </div>
+
+            <div>
+                <label for="tipo">Tipo da ferramenta</label>
+                <input
+                    id="tipo"
+                    type="text"
+                    placeholder="Ex.: Parafusadeira">
+            </div>
+
+            <div>
+                <label for="modelo">Modelo</label>
+                <input
+                    id="modelo"
+                    type="text"
+                    placeholder="Ex.: SF 6-A22">
+            </div>
+
+            <div>
+                <label for="serie">Número de série</label>
+                <input
+                    id="serie"
+                    type="text"
+                    placeholder="Ex.: SN123456">
+            </div>
+
+        </div>
+
+        <button class="btn-primary" onclick="cadastrarFerramenta()">
+            ➕ Cadastrar ferramenta
+        </button>
+
+    </section>
+
+    <!-- LISTA DE FERRAMENTAS -->
+    <section class="card">
+
+        <h2>📋 Ferramentas cadastradas</h2>
+
+        <div id="listaFerramentas"></div>
+
+    </section>
+
+    <!-- ORDEM DE SERVIÇO -->
+    <section class="card">
+
+        <h2>🛠️ Nova Ordem de Serviço</h2>
+
+        <div class="grid">
+
+            <div>
+                <label for="osFerramenta">Ferramenta</label>
+                <select id="osFerramenta">
+                    <option value="">Selecione uma ferramenta</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="osProblema">Problema / Solicitação</label>
+                <input
+                    id="osProblema"
+                    type="text"
+                    placeholder="Ex.: Não liga">
+            </div>
+
+            <div>
+                <label for="osTecnico">Técnico responsável</label>
+                <input
+                    id="osTecnico"
+                    type="text"
+                    placeholder="Nome do técnico">
+            </div>
+
+        </div>
+
+        <button class="btn-success" onclick="criarOrdem()">
+            ➕ Criar ordem de serviço
+        </button>
+
+    </section>
+
+    <!-- ORDENS -->
+    <section class="card">
+
+        <h2>📑 Ordens de Serviço</h2>
+
+        <div id="listaOrdens"></div>
+
+    </section>
+
+    <!-- HISTÓRICO -->
+    <section class="card">
+
+        <h2>📚 Histórico de Reparos</h2>
+
+        <div id="historico"></div>
+
+    </section>
+
+</div>
+
+<script>
+
+/* =========================================
+   DADOS
+========================================= */
+
+let ferramentas =
+    JSON.parse(localStorage.getItem("ferramentas")) || [];
+
+let ordens =
+    JSON.parse(localStorage.getItem("ordens")) || [];
+
+
+/* =========================================
+   SALVAR DADOS
+========================================= */
+
+function salvar() {
+
+    localStorage.setItem(
+        "ferramentas",
+        JSON.stringify(ferramentas)
+    );
+
+    localStorage.setItem(
+        "ordens",
+        JSON.stringify(ordens)
+    );
+}
+
+
+/* =========================================
+   CADASTRAR FERRAMENTA
+========================================= */
+
+function cadastrarFerramenta() {
+
+    const patrimonio =
+        document.getElementById("patrimonio").value.trim();
+
+    const tipo =
+        document.getElementById("tipo").value.trim();
+
+    const modelo =
+        document.getElementById("modelo").value.trim();
+
+    const serie =
+        document.getElementById("serie").value.trim();
+
+    if (!patrimonio || !tipo || !modelo || !serie) {
+
+        alert("Preencha todos os campos da ferramenta.");
+
+        return;
+    }
+
+    const ferramentaExistente =
+        ferramentas.find(
+            ferramenta => ferramenta.patrimonio === patrimonio
+        );
+
+    if (ferramentaExistente) {
+
+        alert("Já existe uma ferramenta com este patrimônio.");
+
+        return;
+    }
+
+    ferramentas.push({
+        id: Date.now(),
+        patrimonio: patrimonio,
+        tipo: tipo,
+        modelo: modelo,
+        serie: serie
+    });
+
+    salvar();
+
+    document.getElementById("patrimonio").value = "";
+    document.getElementById("tipo").value = "";
+    document.getElementById("modelo").value = "";
+    document.getElementById("serie").value = "";
+
+    atualizar();
+
+    alert("Ferramenta cadastrada com sucesso!");
+}
+
+
+/* =========================================
+   EXCLUIR FERRAMENTA
+========================================= */
+
+function excluirFerramenta(id) {
+
+    if (!confirm("Excluir esta ferramenta?")) {
+        return;
+    }
+
+    ferramentas =
+        ferramentas.filter(
+            ferramenta => ferramenta.id !== id
+        );
+
+    salvar();
+
+    atualizar();
+}
+
+
+/* =========================================
+   CRIAR ORDEM DE SERVIÇO
+========================================= */
+
+function criarOrdem() {
+
+    const ferramentaId =
+        Number(document.getElementById("osFerramenta").value);
+
+    const problema =
+        document.getElementById("osProblema").value.trim();
+
+    const tecnico =
+        document.getElementById("osTecnico").value.trim();
+
+    if (!ferramentaId || !problema || !tecnico) {
+
+        alert("Preencha todos os campos da ordem de serviço.");
+
+        return;
+    }
+
+    const ferramenta =
+        ferramentas.find(
+            item => item.id === ferramentaId
+        );
+
+    if (!ferramenta) {
+
+        alert("Ferramenta não encontrada.");
+
+        return;
+    }
+
+    ordens.push({
+        id: Date.now(),
+        ferramentaId: ferramenta.id,
+        patrimonio: ferramenta.patrimonio,
+        modelo: ferramenta.modelo,
+        problema: problema,
+        tecnico: tecnico,
+        status: "Aberta",
+        dataAbertura: new Date().toLocaleString("pt-BR"),
+        dataFinalizacao: ""
+    });
+
+    salvar();
+
+    document.getElementById("osFerramenta").value = "";
+    document.getElementById("osProblema").value = "";
+    document.getElementById("osTecnico").value = "";
+
+    atualizar();
+
+    alert("Ordem de serviço criada com sucesso!");
+}
+
+
+/* =========================================
+   FINALIZAR ORDEM
+========================================= */
+
+function finalizarOrdem(id) {
+
+    const ordem =
+        ordens.find(item => item.id === id);
+
+    if (!ordem) {
+        return;
+    }
+
+    ordem.status = "Finalizada";
+
+    ordem.dataFinalizacao =
+        new Date().toLocaleString("pt-BR");
+
+    salvar();
+
+    atualizar();
+}
+
+
+/* =========================================
+   EXCLUIR ORDEM
+========================================= */
+
+function excluirOrdem(id) {
+
+    if (!confirm("Excluir esta ordem de serviço?")) {
+        return;
+    }
+
+    ordens =
+        ordens.filter(
+            ordem => ordem.id !== id
+        );
+
+    salvar();
+
+    atualizar();
+}
+
+
+/* =========================================
+   ATUALIZAR TELA
+========================================= */
+
+function atualizar() {
+
+    atualizarFerramentas();
+
+    atualizarSelectFerramentas();
+
+    atualizarOrdens();
+
+    atualizarHistorico();
+}
+
+
+/* =========================================
+   MOSTRAR FERRAMENTAS
+========================================= */
+
+function atualizarFerramentas() {
+
+    const lista =
+        document.getElementById("listaFerramentas");
+
+    if (ferramentas.length === 0) {
+
+        lista.innerHTML =
+            '<div class="vazio">Nenhuma ferramenta cadastrada.</div>';
+
+        return;
+    }
+
+    let html = `
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Patrimônio</th>
+                    <th>Tipo</th>
+                    <th>Modelo</th>
+                    <th>Série</th>
+                    <th>Ações</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+    `;
+
+    ferramentas.forEach(ferramenta => {
+
+        html += `
+            <tr>
+
+                <td>${ferramenta.patrimonio}</td>
+
+                <td>${ferramenta.tipo}</td>
+
+                <td>${ferramenta.modelo}</td>
+
+                <td>${ferramenta.serie}</td>
+
+                <td>
+
+                    <button
+                        class="btn-danger"
+                        onclick="excluirFerramenta(${ferramenta.id})">
+
+                        🗑️ Excluir
+
+                    </button>
+
+                </td>
+
+            </tr>
+        `;
+
+    });
+
+    html += `
+            </tbody>
+        </table>
+    `;
+
+    lista.innerHTML = html;
+}
+
+
+/* =========================================
+   SELECT DAS FERRAMENTAS
+========================================= */
+
+function atualizarSelectFerramentas() {
+
+    const select =
+        document.getElementById("osFerramenta");
+
+    const valorAtual = select.value;
+
+    select.innerHTML =
+        '<option value="">Selecione uma ferramenta</option>';
+
+    ferramentas.forEach(ferramenta => {
+
+        const option =
+            document.createElement("option");
+
+        option.value = ferramenta.id;
+
+        option.textContent =
+            ferramenta.patrimonio +
+            " - " +
+            ferramenta.modelo;
+
+        select.appendChild(option);
+    });
+
+    select.value = valorAtual;
+}
+
+
+/* =========================================
+   MOSTRAR ORDENS
+========================================= */
+
+function atualizarOrdens() {
+
+    const lista =
+        document.getElementById("listaOrdens");
+
+    if (ordens.length === 0) {
+
+        lista.innerHTML =
+            '<div class="vazio">Nenhuma ordem de serviço cadastrada.</div>';
+
+        return;
+    }
+
+    let html = `
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Patrimônio</th>
+                    <th>Problema</th>
+                    <th>Técnico</th>
+                    <th>Status</th>
+                    <th>Data</th>
+                    <th>Ações</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+    `;
+
+    ordens.forEach(ordem => {
+
+        html += `
+            <tr>
+
+                <td>${ordem.patrimonio}</td>
+
+                <td>${ordem.problema}</td>
+
+                <td>${ordem.tecnico}</td>
+
+                <td>
+                    <span class="status">
+                        ${ordem.status}
+                    </span>
+                </td>
+
+                <td>${ordem.dataAbertura}</td>
+
+                <td>
+
+                    <div class="acoes">
+
+                        ${
+                            ordem.status === "Aberta"
+
+                            ? `
+                                <button
+                                    class="btn-success"
+                                    onclick="finalizarOrdem(${ordem.id})">
+
+                                    ✅ Finalizar
+
+                                </button>
+                              `
+
+                            : ""
+                        }
+
+                        <button
+                            class="btn-danger"
+                            onclick="excluirOrdem(${ordem.id})">
+
+                            🗑️ Excluir
+
+                        </button>
+
+                    </div>
+
+                </td>
+
+            </tr>
+        `;
+
+    });
+
+    html += `
+            </tbody>
+        </table>
+    `;
+
+    lista.innerHTML = html;
+}
+
+
+/* =========================================
+   HISTÓRICO
+========================================= */
+
+function atualizarHistorico() {
+
+    const historico =
+        document.getElementById("historico");
+
+    const finalizadas =
+        ordens.filter(
+            ordem => ordem.status === "Finalizada"
+        );
+
+    if (finalizadas.length === 0) {
+
+        historico.innerHTML =
+            '<div class="vazio">Nenhum reparo finalizado ainda.</div>';
+
+        return;
+    }
+
+    let html = `
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Patrimônio</th>
+                    <th>Modelo</th>
+                    <th>Problema</th>
+                    <th>Técnico</th>
+                    <th>Finalização</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+    `;
+
+    finalizadas.forEach(ordem => {
+
+        html += `
+            <tr>
+
+                <td>${ordem.patrimonio}</td>
+
+                <td>${ordem.modelo}</td>
+
+                <td>${ordem.problema}</td>
+
+                <td>${ordem.tecnico}</td>
+
+                <td>${ordem.dataFinalizacao}</td>
+
+            </tr>
+        `;
+
+    });
+
+    html += `
+            </tbody>
+        </table>
+    `;
+
+    historico.innerHTML = html;
+}
+
+
+/* =========================================
+   INICIALIZAÇÃO
+========================================= */
+
+atualizar();
+
+</script>
+
+</body>
+</html>
