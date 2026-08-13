@@ -213,44 +213,35 @@ JSON.parse(localStorage.getItem("ordens")) || [];
    FERRAMENTAS
 ========================= */
 
-function cadastrarFerramenta(){
+function cadastrarFerramenta() {
 
-  const patrimonio =
-    document.getElementById("patrimonio").value.trim();
+    const patrimonio = document.getElementById("patrimonio").value.trim();
+    const tipo = document.getElementById("tipo").value.trim();
+    const modelo = document.getElementById("modelo").value.trim();
+    const serie = document.getElementById("serie").value.trim();
 
-  const tipo =
-    document.getElementById("tipo").value.trim();
+    if (!patrimonio || !tipo || !modelo || !serie) {
+        alert("Preencha todos os campos da ferramenta.");
+        return;
+    }
 
-  const modelo =
-    document.getElementById("modelo").value.trim();
+    ferramentas.push({
+        id: Date.now(),
+        patrimonio: patrimonio,
+        tipo: tipo,
+        modelo: modelo,
+        serie: serie
+    });
+localStorage.setItem("ferramentas", JSON.stringify(ferramentas));
+    document.getElementById("patrimonio").value = "";
+    document.getElementById("tipo").value = "";
+    document.getElementById("modelo").value = "";
+    document.getElementById("serie").value = "";
 
-  const serie =
-    document.getElementById("serie").value.trim();
+    atualizar();
 
-  if(!patrimonio || !tipo){
-    alert("Informe pelo menos o patrimônio e o tipo da ferramenta.");
-    return;
-  }
-
-  ferramentas.push({
-    id:Date.now(),
-    patrimonio,
-    tipo,
-    modelo,
-    serie
-  });
-
-  salvar();
-
-  document.getElementById("patrimonio").value="";
-  document.getElementById("tipo").value="";
-  document.getElementById("modelo").value="";
-  document.getElementById("serie").value="";
-
-  atualizar();
+    alert("Ferramenta cadastrada com sucesso!");
 }
-
-
 function excluirFerramenta(id){
 
   if(!confirm("Excluir esta ferramenta?")) return;
@@ -391,3 +382,179 @@ function analisarIA(){
     2. Verificar engrenagens.<br>
     3. Verificar eixo e componentes mecânicos.<br>
     4. Procurar folgas ou desgaste.<br><br>
+    <strong>⚠️ A IA é apenas apoio. O diagnóstico final deve ser realizado pelo profissional.</strong>
+`;
+} else {
+    texto += `
+    Não foi possível identificar o problema automaticamente.<br>
+    Faça uma inspeção visual e funcional da ferramenta.
+    <br><br>
+    <strong>⚠️ A IA é apenas apoio. O diagnóstico final deve ser realizado por profissional.</strong>
+    `;
+}
+
+resposta.innerHTML = texto;
+resposta.style.display = "block";
+}
+
+
+/* =========================
+   SALVAR DADOS
+========================= */
+
+function salvar(){
+
+    localStorage.setItem(
+        "ferramentas",
+        JSON.stringify(ferramentas)
+    );
+
+    localStorage.setItem(
+        "ordens",
+        JSON.stringify(ordens)
+    );
+}
+
+
+/* =========================
+   ATUALIZAR TELA
+========================= */
+
+function atualizar(){
+
+    const lista = document.getElementById("listaFerramentas");
+    const select = document.getElementById("ferramentaOS");
+    const listaOS = document.getElementById("listaOS");
+    const historico = document.getElementById("historico");
+
+    lista.innerHTML = "";
+    select.innerHTML = "";
+
+    ferramentas.forEach(f => {
+
+        lista.innerHTML += `
+        <div class="item">
+
+            <strong>${f.tipo}</strong><br>
+
+            Patrimônio: ${f.patrimonio}<br>
+            Modelo: ${f.modelo || "-"}<br>
+            Série: ${f.serie || "-"}
+
+            <br><br>
+
+            <button
+                class="btn-danger"
+                onclick="excluirFerramenta(${f.id})">
+                🗑️ Excluir
+            </button>
+
+        </div>
+        `;
+
+        select.innerHTML += `
+        <option value="${f.id}">
+            ${f.patrimonio} - ${f.tipo} ${f.modelo || ""}
+        </option>
+        `;
+    });
+
+
+    listaOS.innerHTML = "";
+
+    ordens.forEach(o => {
+
+        listaOS.innerHTML += `
+        <div class="item">
+
+            <strong>${o.ferramenta}</strong><br>
+
+            Patrimônio: ${o.patrimonio}<br>
+            Problema: ${o.problema}<br>
+            Diagnóstico: ${o.diagnostico || "-"}<br>
+            Tempo: ${o.tempo}h<br>
+
+            <span class="badge">
+                ${o.status}
+            </span>
+
+            <br><br>
+
+            ${
+                o.status === "Aberta"
+                ?
+                `<button
+                    class="btn-ok"
+                    onclick="finalizarOS(${o.id})">
+                    ✅ Finalizar
+                </button>`
+                :
+                ""
+            }
+
+            <button
+                class="btn-danger"
+                onclick="excluirOS(${o.id})">
+                🗑️ Excluir
+            </button>
+
+        </div>
+        `;
+    });
+
+
+    historico.innerHTML = "";
+
+    ordens
+        .filter(o => o.status === "Finalizada")
+        .forEach(o => {
+
+            historico.innerHTML += `
+            <div class="item">
+
+                <strong>${o.ferramenta}</strong><br>
+
+                Patrimônio: ${o.patrimonio}<br>
+                Problema: ${o.problema}<br>
+                Diagnóstico: ${o.diagnostico || "-"}<br>
+                Tempo: ${o.tempo}h<br>
+                Data: ${o.data}
+
+            </div>
+            `;
+        });
+
+
+    document.getElementById("totalFerramentas").textContent =
+        ferramentas.length;
+
+    document.getElementById("osAbertas").textContent =
+        ordens.filter(o => o.status === "Aberta").length;
+
+    document.getElementById("osFinalizadas").textContent =
+        ordens.filter(o => o.status === "Finalizada").length;
+
+
+    const finalizadas =
+        ordens.filter(o => o.status === "Finalizada");
+
+    const media =
+        finalizadas.length
+        ?
+        finalizadas.reduce(
+            (soma, o) => soma + Number(o.tempo || 0),
+            0
+        ) / finalizadas.length
+        :
+        0;
+
+    document.getElementById("tempoMedio").textContent =
+        media.toFixed(1) + "h";
+}
+
+
+/* =========================
+   INICIALIZAÇÃO
+========================= */
+
+atualizar();
