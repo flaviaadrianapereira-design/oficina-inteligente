@@ -461,22 +461,82 @@ function criarOrdem() {
 
 function finalizarOrdem(id) {
 
-    const ordem =
-        ordens.find(item => item.id === id);
+    const ordem = ordens.find(item => item.id === id);
 
     if (!ordem) {
         return;
     }
 
-    ordem.status = "Finalizada";
+    const confirmar = confirm(
+        "Deseja finalizar esta ordem de serviço e registrar os dados do reparo?"
+    );
 
-    ordem.dataFinalizacao =
-        new Date().toLocaleString("pt-BR");
+    if (!confirmar) {
+        return;
+    }
+
+    const diagnostico = prompt(
+        "🔍 DIAGNÓSTICO\n\nQual foi o diagnóstico da ferramenta?"
+    );
+
+    if (diagnostico === null) {
+        return;
+    }
+
+    const servico = prompt(
+        "🛠️ SERVIÇO REALIZADO\n\nO que foi feito na ferramenta?"
+    );
+
+    if (servico === null) {
+        return;
+    }
+
+    const pecas = prompt(
+        "🔩 PEÇAS UTILIZADAS\n\nInforme as peças utilizadas ou digite 'Nenhuma'."
+    );
+
+    if (pecas === null) {
+        return;
+    }
+
+    const tempo = prompt(
+        "⏱️ TEMPO DE REPARO\n\nInforme o tempo aproximado. Ex.: 2 horas"
+    );
+
+    if (tempo === null) {
+        return;
+    }
+
+    const teste = prompt(
+        "🧪 RESULTADO DO TESTE\n\nA ferramenta foi testada e ficou funcionando?"
+    );
+
+    if (teste === null) {
+        return;
+    }
+
+    const observacoes = prompt(
+        "📝 OBSERVAÇÕES\n\nAlguma observação adicional?"
+    );
+
+    if (observacoes === null) {
+        return;
+    }
+
+    ordem.status = "Finalizada";
+    ordem.dataFinalizacao = new Date().toLocaleString("pt-BR");
+
+    ordem.diagnostico = diagnostico;
+    ordem.servicoRealizado = servico;
+    ordem.pecasUtilizadas = pecas;
+    ordem.tempoReparo = tempo;
+    ordem.resultadoTeste = teste;
+    ordem.observacoes = observacoes;
 
     salvar();
-
     atualizar();
 }
+
 
 
 /* =========================================
