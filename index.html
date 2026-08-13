@@ -1,185 +1,87 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oficina Inteligente</title>
-</head>
-
-<body>
-
-    <h1>🔧 Oficina Inteligente</h1>
-
-    <p>
-        Sistema inteligente para gestão de manutenção de ferramentas.
-    </p>
-
-    <h2>📊 Dashboard</h2>
-
-    <ul>
-        <li>🔧 Ferramentas em manutenção: 0</li>
-        <li>📋 Ordens de serviço abertas: 0</li>
-        <li>✅ Serviços finalizados: 0</li>
-        <li>⏱️ Tempo médio de reparo: 0h</li>
-    </ul>
-
-    <h2>📋 Ordens de Serviço</h2>
-
-    <button>+ Nova Ordem de Serviço</button>
-
-    <h2>🤖 Assistente de IA</h2>
-
-    <p>
-        Descreva o problema da ferramenta para receber apoio
-        na organização d…
-[10:39, 13/08/2026] Flávia: https://flaviaadrianapereira-design.github.io/oficina-inteligente/
-[10:48, 13/08/2026] Flávia: <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Oficina Inteligente</title>
 
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f4f6f8;
+  color:#17202a;
 }
-
-body {
-    background: #f4f6f8;
-    color: #1f2937;
+header{
+  background:#17365d;
+  color:white;
+  padding:25px;
 }
-
-header {
-    background: #123b5d;
-    color: white;
-    padding: 25px;
+header h1{margin:0 0 6px}
+.container{max-width:1100px;margin:auto;padding:20px}
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:15px;
 }
-
-header h1 {
-    font-size: 30px;
+.card{
+  background:white;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 2px 8px #0001;
 }
-
-header p {
-    margin-top: 8px;
-    opacity: .9;
+.numero{font-size:30px;font-weight:bold}
+section{
+  background:white;
+  margin-top:20px;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 2px 8px #0001;
 }
-
-.container {
-    max-width: 1100px;
-    margin: 30px auto;
-    padding: 0 20px;
+input,select,textarea{
+  width:100%;
+  padding:11px;
+  margin:6px 0 12px;
+  border:1px solid #ccd3da;
+  border-radius:7px;
 }
-
-.dashboard {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
-    margin-bottom: 30px;
+button{
+  background:#17365d;
+  color:white;
+  border:0;
+  padding:11px 16px;
+  border-radius:7px;
+  cursor:pointer;
+  margin:3px;
 }
-
-.card {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px #00000015;
+button:hover{opacity:.9}
+.btn-danger{background:#b42318}
+.btn-ok{background:#16803c}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:15px;
 }
-
-.card h3 {
-    font-size: 15px;
-    color: #64748b;
+.item{
+  border:1px solid #ddd;
+  padding:15px;
+  border-radius:8px;
+  margin:8px 0;
 }
-
-.card strong {
-    display: block;
-    font-size: 30px;
-    margin-top: 10px;
+.badge{
+  display:inline-block;
+  padding:4px 8px;
+  border-radius:15px;
+  background:#e7eef7;
+  font-size:12px;
 }
-
-section {
-    background: white;
-    padding: 25px;
-    margin-bottom: 25px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px #00000015;
-}
-
-h2 {
-    margin-bottom: 20px;
-    color: #123b5d;
-}
-
-.form {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-}
-
-input, select, textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
-}
-
-textarea {
-    min-height: 100px;
-    resize: vertical;
-}
-
-button {
-    background: #123b5d;
-    color: white;
-    border: none;
-    padding: 12px 18px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-button:hover {
-    opacity: .9;
-}
-
-.full {
-    grid-column: 1 / -1;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-th, td {
-    padding: 12px;
-    border-bottom: 1px solid #e2e8f0;
-    text-align: left;
-}
-
-th {
-    background: #f1f5f9;
-}
-
-.resultado {
-    margin-top: 15px;
-    padding: 15px;
-    background: #eef6ff;
-    border-left: 4px solid #123b5d;
-    border-radius: 6px;
-}
-
-@media(max-width: 800px) {
-    .dashboard {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .form {
-        grid-template-columns: 1fr;
-    }
+#respostaIA{
+  background:#eef5ff;
+  padding:15px;
+  border-radius:8px;
+  margin-top:10px;
+  display:none;
 }
 </style>
 </head>
@@ -187,10 +89,305 @@ th {
 <body>
 
 <header>
+  <div class="container">
     <h1>🔧 Oficina Inteligente</h1>
-    <p>Sistema inteligente para gestão de manutenção de ferramentas</p>
+    <div>Sistema de gestão de manutenção de ferramentas</div>
+  </div>
 </header>
 
 <div class="container">
 
-    <div class="dashboard
+  <!-- DASHBOARD -->
+  <section>
+    <h2>📊 Dashboard</h2>
+
+    <div class="cards">
+      <div class="card">
+        <div>🔧 Ferramentas</div>
+        <div class="numero" id="totalFerramentas">0</div>
+      </div>
+
+      <div class="card">
+        <div>📋 OS abertas</div>
+        <div class="numero" id="osAbertas">0</div>
+      </div>
+
+      <div class="card">
+        <div>✅ Serviços finalizados</div>
+        <div class="numero" id="osFinalizadas">0</div>
+      </div>
+
+      <div class="card">
+        <div>⏱️ Tempo médio</div>
+        <div class="numero" id="tempoMedio">0h</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FERRAMENTAS -->
+  <section>
+    <h2>🔧 Cadastro de Ferramentas</h2>
+
+    <div class="grid">
+      <div>
+        <label>Patrimônio / Código</label>
+        <input id="patrimonio" placeholder="Ex.: 123456">
+      </div>
+
+      <div>
+        <label>Tipo da ferramenta</label>
+        <input id="tipo" placeholder="Ex.: Parafusadeira">
+      </div>
+
+      <div>
+        <label>Modelo</label>
+        <input id="modelo" placeholder="Ex.: SF 6-A22">
+      </div>
+
+      <div>
+        <label>Número de série</label>
+        <input id="serie" placeholder="Ex.: SN123456">
+      </div>
+    </div>
+
+    <button onclick="cadastrarFerramenta()">➕ Cadastrar ferramenta</button>
+
+    <div id="listaFerramentas"></div>
+  </section>
+
+  <!-- ORDEM DE SERVIÇO -->
+  <section>
+    <h2>📋 Nova Ordem de Serviço</h2>
+
+    <label>Ferramenta</label>
+    <select id="ferramentaOS"></select>
+
+    <label>Problema relatado</label>
+    <textarea id="problema" placeholder="Descreva o problema apresentado pela ferramenta"></textarea>
+
+    <label>Diagnóstico</label>
+    <textarea id="diagnostico" placeholder="Informe o diagnóstico técnico"></textarea>
+
+    <label>Tempo estimado de reparo (horas)</label>
+    <input id="tempo" type="number" step="0.1" placeholder="Ex.: 2">
+
+    <button onclick="criarOS()">📋 Criar Ordem de Serviço</button>
+
+    <div id="listaOS"></div>
+  </section>
+
+  <!-- IA -->
+  <section>
+    <h2>🤖 Assistente de IA para Diagnóstico</h2>
+
+    <p>
+      Descreva o problema da ferramenta e receba sugestões de verificações técnicas.
+    </p>
+
+    <textarea id="problemaIA"
+      placeholder="Ex.: Parafusadeira não liga e não apresenta sinal de funcionamento..."></textarea>
+
+    <button onclick="analisarIA()">🔎 Analisar diagnóstico</button>
+
+    <div id="respostaIA"></div>
+  </section>
+
+  <!-- HISTÓRICO -->
+  <section>
+    <h2>📚 Histórico de Reparos</h2>
+    <div id="historico"></div>
+  </section>
+
+</div>
+
+<script>
+
+let ferramentas =
+JSON.parse(localStorage.getItem("ferramentas")) || [];
+
+let ordens =
+JSON.parse(localStorage.getItem("ordens")) || [];
+
+
+/* =========================
+   FERRAMENTAS
+========================= */
+
+function cadastrarFerramenta(){
+
+  const patrimonio =
+    document.getElementById("patrimonio").value.trim();
+
+  const tipo =
+    document.getElementById("tipo").value.trim();
+
+  const modelo =
+    document.getElementById("modelo").value.trim();
+
+  const serie =
+    document.getElementById("serie").value.trim();
+
+  if(!patrimonio || !tipo){
+    alert("Informe pelo menos o patrimônio e o tipo da ferramenta.");
+    return;
+  }
+
+  ferramentas.push({
+    id:Date.now(),
+    patrimonio,
+    tipo,
+    modelo,
+    serie
+  });
+
+  salvar();
+
+  document.getElementById("patrimonio").value="";
+  document.getElementById("tipo").value="";
+  document.getElementById("modelo").value="";
+  document.getElementById("serie").value="";
+
+  atualizar();
+}
+
+
+function excluirFerramenta(id){
+
+  if(!confirm("Excluir esta ferramenta?")) return;
+
+  ferramentas =
+    ferramentas.filter(f => f.id !== id);
+
+  salvar();
+  atualizar();
+}
+
+
+/* =========================
+   ORDENS DE SERVIÇO
+========================= */
+
+function criarOS(){
+
+  const ferramentaId =
+    Number(document.getElementById("ferramentaOS").value);
+
+  const ferramenta =
+    ferramentas.find(f => f.id === ferramentaId);
+
+  if(!ferramenta){
+    alert("Cadastre uma ferramenta primeiro.");
+    return;
+  }
+
+  const problema =
+    document.getElementById("problema").value.trim();
+
+  const diagnostico =
+    document.getElementById("diagnostico").value.trim();
+
+  const tempo =
+    Number(document.getElementById("tempo").value);
+
+  if(!problema){
+    alert("Informe o problema da ferramenta.");
+    return;
+  }
+
+  ordens.push({
+    id:Date.now(),
+    ferramentaId,
+    patrimonio:ferramenta.patrimonio,
+    ferramenta:
+      ferramenta.tipo + " " + ferramenta.modelo,
+    problema,
+    diagnostico,
+    tempo:tempo || 0,
+    status:"Aberta",
+    data:new Date().toLocaleDateString("pt-BR")
+  });
+
+  salvar();
+
+  document.getElementById("problema").value="";
+  document.getElementById("diagnostico").value="";
+  document.getElementById("tempo").value="";
+
+  atualizar();
+}
+
+
+function finalizarOS(id){
+
+  const os =
+    ordens.find(o => o.id === id);
+
+  if(!os) return;
+
+  os.status="Finalizada";
+
+  salvar();
+  atualizar();
+}
+
+
+function excluirOS(id){
+
+  if(!confirm("Excluir esta ordem de serviço?")) return;
+
+  ordens =
+    ordens.filter(o => o.id !== id);
+
+  salvar();
+  atualizar();
+}
+
+
+/* =========================
+   ASSISTENTE DE IA
+========================= */
+
+function analisarIA(){
+
+  const problema =
+    document.getElementById("problemaIA")
+    .value.toLowerCase();
+
+  const resposta =
+    document.getElementById("respostaIA");
+
+  if(!problema){
+
+    alert("Descreva o problema da ferramenta.");
+
+    return;
+  }
+
+  let texto =
+    "<strong>🔎 Sugestão de verificação técnica:</strong><br><br>";
+
+  if(
+    problema.includes("não liga") ||
+    problema.includes("nao liga")
+  ){
+
+    texto += `
+    1. Verificar bateria ou alimentação.<br>
+    2. Verificar contatos elétricos.<br>
+    3. Testar interruptor.<br>
+    4. Verificar cabos e conexões.<br>
+    5. Verificar placa eletrônica.<br><br>
+    <strong>⚠️ A IA é apenas apoio. O diagnóstico final deve ser realizado pelo profissional.</strong>
+    `;
+
+  }else if(
+    problema.includes("barulho") ||
+    problema.includes("ruído") ||
+    problema.includes("ruido")
+  ){
+
+    texto += `
+    1. Verificar rolamentos.<br>
+    2. Verificar engrenagens.<br>
+    3. Verificar eixo e componentes mecânicos.<br>
+    4. Procurar folgas ou desgaste.<br><br>
